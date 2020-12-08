@@ -1,0 +1,355 @@
+﻿<!doctype html>
+<html class="no-js" lang="">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Qual o cantor?</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="apple-touch-icon" href="icon.png">
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" type="text/css" href="font/material-icons.css"> 
+</head>
+<body>
+
+  <!-- inicio -->
+  <section class="inicio">
+    <h1>QUAL O CANTOR?</h1>    
+    <button>INICIAR</button>
+  </section>
+  <!-- inicio -->
+  
+  <!-- flag-1 -->
+  <section class="flag flag-1">  
+    <header>
+      <p>
+        <span class="mticons">star</span> 
+        ACERTOS: <span class="acertos">0</span>
+      </p>
+      <p>
+        <span class="mticons">alarm</span> 
+        <span class="minutos">00</span>:<span class="tempo">00</span>
+      </p>
+    </header>
+    <div>
+      <h1>QUAIS OS 3 CANTORES?</h1>
+      <ul>
+        <li><img class="certo v1" src="img/harry.jpg"></li>
+        <li><img class="errado01" src="img/post.jpg"></li>
+        <li><img class="certo v2" src="img/aurora.jpg"></li>
+        <li><img class="errado01" src="img/alec.png"></li>
+        <li><img class="errado01" src="img/cassia.jpg"></li>
+        <li><img class="errado01" src="img/kamaitachi.jpg"></li>
+        <li><img class="errado01" src="img/demi.jpg"></li>
+        <li><img class="errado01" src="img/dua.webp"></li>
+        <li><img class="errado01" src="img/avril.jpg"></li>
+
+      </ul>
+    </div>
+    <footer>
+      <p>
+        <span class="home mticons">home</span>
+        <span class="som01 mticons">volume_up</span>
+        <span class="ajuda mticons">help_outline</span>
+      </p>
+    </footer>
+  </section>
+  <!-- flag-1 -->
+  
+  <!-- flag-2 -->
+  <section class="flag flag-2">  
+    <header>
+      <p>
+        <span class="mticons">star</span> 
+        ACERTOS: <span class="acertos">0</span>
+      </p>
+      <p>
+        <span class="mticons">alarm</span> 
+        <span class="minutos">00</span>:<span class="tempo2">00</span>
+      </p>
+    </header>
+    <div>
+      <h1>QUEM ESTÁ CANTANDO?</h1>
+      <ul>
+        
+        <li><img class="certo v1" src="img/kamaitachi.jpg"></li>
+        <li><img class="errado02" src="img/harry.jpg"></li>
+        <li><img class="certo v2" src="img/avril.jpg"></li>
+        <li><img class="errado02" src="img/alec.png"></li>
+        <li><img class="errado02" src="img/cassia.jpg"></li>
+        <li><img class="errado02" src="img/demi.jpg"></li>
+        <li><img class="errado02" src="img/aurora.jpg"></li>
+        <li><img class="errado02" src="img/dua.webp"></li>
+        <li><img class="certo v3" src="img/post.jpg"></li>
+      </ul>
+    </div>
+    <footer>
+      <p>
+        <span class="home mticons">home</span>
+        <span class="som02 mticons">volume_up</span>
+        <span class="ajuda mticons">help_outline</span>
+      </p>
+    </footer>
+  </section>
+  <!-- flag-2 -->
+
+  <!-- flag-3 -->
+  <section class="flag-3">
+    <h2>TOTAL DE ACERTOS: <span class="pont">0</span></h2>
+    <h2>TOTAL DE ERROS: <span class="errors">0</span></h2>
+    <p></p>
+    <h2 id="idTempo">TEMPO: 00:<span class="temp">00</span></h2>
+    <button>JOGAR NOVAMENTE</button>
+  </section>
+  <!-- flag-3 -->
+ 
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="js/plugins.js"></script>
+  <script src="js/main.js"></script>
+
+  <script type="text/javascript">
+
+  /*variaveis - musicas, acertos, erros e fim*/
+
+    var musica = new Audio();
+    var musica1 = new Audio();
+    var musica2 = new Audio();
+    var musica3 = new Audio();
+    var musica4 = new Audio();
+    var musica5 = new Audio();
+    var acertos = 0;
+    var erros = 0;
+    var erros02 = 0;
+    var fim = false;
+
+/* >> BOTÃO PRA COMEÇAR O JOGO << */
+
+/* Aqui se organiza as músicas e começa o contador */
+    $("section.inicio button").on("click", function() {
+      /* 1 */
+      musica1 = new Audio('musica/adore.mp3');
+      musica1.play();
+      musica2 = new Audio('musica/runaway.mp3');
+      musica2.play();
+      /* 2 */
+      musica3 = new Audio('musica/reidosratos.mp3');
+      musica4 = new Audio('musica/circles.mp3');
+      musica5 = new Audio('musica/girlfriend.mp3');
+    
+      $("section").hide();
+      $("section.flag-1").show();
+
+/* >>CONTADOR<< */
+
+      var timer = setInterval(function() {
+        var tempo = parseInt($("span.tempo").text());
+        var tempo2 = parseInt($("span.tempo2").text());
+        tempo++;
+        if (tempo < 10) {
+          tempo = "0" + tempo;
+          tempo2 = "0" + tempo;
+        } else if ((tempo >= 60) && (fim === false)) { /* caso o tempo esgote */
+          $("span.pont").text(acertos);
+          $("span.errors").text(erros + erros02);
+          $("section").hide();
+          $("section.flag-3").show();
+
+          document.getElementById("idTempo").style.display = "none"; 
+          //nao mostrar o tempo que demorou se ele perder o jogo por demorar muito
+
+
+          $("section.flag-3 p").text("Tempo esgotado");
+          musica1.pause();
+          musica2.pause();
+          musica3.pause();
+          musica4.pause();
+          musica5.pause();
+          musica = new Audio('musica/game-over-acarde.wav');
+          musica.play();
+          clearInterval(timer);
+        }
+        $("span.tempo").text(tempo);
+        $("span.tempo2").text(tempo); //guardar o tempo
+      }, 1000)
+    });
+
+/* >> BOTÃO HOME<< */
+
+    $("section.flag footer p span.home").on("click",function(){
+      location.reload();
+    })
+
+/* >>BOTÃO MUTE / UNMUTE<< 1*/
+
+    $("section.flag-1 footer p span.som01").on("click", function() {
+      var botao = $("span.som01").text();
+      if (botao == "volume_up") {
+        musica1.pause();
+        musica2.pause();
+        $("span.som01").text("volume_off");
+      } else {
+        $("span.som01").text("volume_up");
+        musica1.play();
+        musica2.play();
+      }
+    });
+
+/* >>BOTÃO MUTE / UNMUTE<< 2*/
+
+    $("section.flag-2 footer p span.som02").on("click", function() {
+      var botao = $("span.som02").text();
+      if (botao == "volume_up") {
+        musica3.pause();
+        musica4.pause();
+        musica5.pause();
+        $("span.som02").text("volume_off");
+      } else {
+        $("span.som02").text("volume_up");
+        musica3.play();
+        musica4.play();
+        musica5.play();
+      }
+    });
+
+/* >>BOTÃO AJUDA<< 1*/
+
+    $("section.flag-1 footer p span.ajuda").one("click", function() {
+      $(this).css({opacity: 0.5});
+      var bandeiras = $(".errado01");
+      for (var i=0; i<2; i++) {
+        var random = Math.floor(Math.random() * bandeiras.length);
+        if (bandeiras[random].style.opacity === "0.5") {
+          i--;
+        } else {
+          bandeiras[random].style.opacity = "0.5";
+        }
+      }
+    });
+
+/* >>BOTÃO AJUDA<< 2*/
+
+    $("section.flag-2 footer p span.ajuda").one("click", function() {
+      $(this).css({opacity: 0.5});
+      var bandeiras = $(".errado02");
+      for (var i=0; i<2; i++) {
+        var random = Math.floor(Math.random() * bandeiras.length);
+        if (bandeiras[random].style.opacity === "0.5") {
+          i--;
+        } else {
+          bandeiras[random].style.opacity = "0.5";
+        }
+      }
+    });
+
+/* >>VERIFICAÇÃO ACERTO<< 1*/
+
+    $("section.flag-1 ul img.certo").one("click", function() {
+      $(this).css({opacity: 0.5});
+      acertos++;
+      $("span.acertos").text(acertos);
+      if (this.className === "certo v1") {
+        musica1.pause();
+        musica1 = new Audio('musica/silencio.m4a');
+      } else if (this.className === "certo v2") {
+        musica2.pause();
+        musica2 = new Audio('musica/silencio.m4a');
+      }
+      
+      if (acertos == 2) {
+        $("section.flag-1").hide();
+        $("section.flag-2").show();
+        musica3.play();
+        musica4.play();
+        musica5.play();
+      }
+    });
+
+/* >>VERIFICAÇÃO ACERTO<< 2*/
+
+    $("section.flag-2 ul img.certo").one("click", function() {
+      $(this).css({opacity: 0.5});
+      acertos++;
+      $("span.acertos").text(acertos);
+
+      if (this.className === "certo v1") {
+        musica3.pause();
+        musica3 = new Audio('musica/silencio.m4a');
+      } else if (this.className === "certo v2") {
+        musica4.pause();
+        musica4 = new Audio('musica/silencio.m4a');
+      } else if (this.className === "certo v3") {
+        musica5.pause();
+        musica5 = new Audio('musica/silencio.m4a');
+      }
+
+      if (acertos == 5) {
+        fim = true;
+        musica = new Audio('musica/correct.mp3');
+        musica.play();
+        $("span.pont").text(acertos);
+        $("span.errors").text(erros + erros02);
+        $("span.temp").text($("span.tempo").text());
+        $("section").hide();
+        $("section.flag-3").show();
+      }
+    });
+
+/* >>VERIFICAÇÃO ERROS<< 1*/
+
+    $("section.flag-1 ul img.errado01").one("click", function() {
+      if (this.style.opacity !== "0.5") {
+        erros++;
+        $(this).css({opacity: 0.5});
+
+        if (erros > 2) {
+          fim = true;
+          musica1.pause();
+          musica2.pause();
+          musica3.pause();
+
+          musica = new Audio('musica/game-over-acarde.wav');
+          musica.play();
+          $("span.pont").text(acertos);
+          $("span.errors").text(erros);
+          $("span.temp").text($("span.tempo").text());
+          $("section").hide();
+          $("section.flag-3").show();
+        }
+      }
+    });
+
+/* >>VERIFICAÇÃO ERROS<< 2*/
+
+    $("section.flag-2 ul img.errado02").one("click", function() {
+      if (this.style.opacity !== "0.5") {
+        erros02++;
+        $(this).css({opacity: 0.5});
+
+        if (erros02 > 2) {
+          fim = true;
+          musica3.pause();
+          musica4.pause();
+          musica5.pause();
+
+          musica = new Audio('musica/game-over-acarde.wav');
+          musica.play();
+          $("span.pont").text(acertos);
+          $("span.errors").text(erros + erros02);
+          $("span.temp").text($("span.tempo").text());
+          $("section").hide();
+          $("section.flag-3").show();
+        }
+      }
+    });
+
+/* >>JOGAR NOVAMENTE<< */
+
+    $("section.flag-3 button").on("click", function() {
+      location.reload();
+    });
+  </script>
+
+</body>
+</html>
